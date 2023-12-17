@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package admin;
+
+option go_package = "./admin";
+
+// import "google/protobuf/empty.proto";
+
+// import "google/protobuf/timestamp.proto";
+
+service Admin{
+    rpc AddProduct(AddProductRequest) returns (AddProductResponse);
+}
+
+message AddProductRequest {
+    string name = 1;
+}
+
+message AddProductResponse {
+    uint64 id = 1;
+}
