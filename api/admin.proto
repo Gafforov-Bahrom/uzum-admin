@@ -4,18 +4,65 @@ package admin;
 
 option go_package = "./admin";
 
-// import "google/protobuf/empty.proto";
+import "google/protobuf/empty.proto";
 
 // import "google/protobuf/timestamp.proto";
 
-service Admin{
-    rpc AddProduct(AddProductRequest) returns (AddProductResponse);
+service AdminService{
+    rpc ListProducts(ListProductsRequest) returns (ListProductsResponse);
+    rpc GetProduct(GetProductRequest) returns (Product);
+    rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
+    rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductResponse);
+    rpc DeleteProduct (DeleteProductRequest) returns (google.protobuf.Empty);
 }
 
-message AddProductRequest {
+message ListProductsRequest {
+    uint64 limit = 1;
+    uint64 offset = 2;
+    string query = 3;
+}
+
+message ListProductsResponse {
+    uint64 count = 1;
+    repeated Product items = 2; 
+}
+
+message Product {
+    uint64 id = 1;
+    string name = 2;
+    uint64 price = 3;
+    string description = 4;
+    uint64 count = 5;
+}
+
+message GetProductRequest {
+    uint64 id = 1;
+}
+
+message CreateProductRequest {
     string name = 1;
+    uint64 price = 2;
+    string description = 3;
+    uint64 count = 4;
 }
 
-message AddProductResponse {
+
+message CreateProductResponse {
+    uint64 id = 1;
+}
+
+message UpdateProductRequest {
+    uint64 id = 1;
+    string name = 2;
+    uint64 price = 3;
+    string description = 4;
+    uint64 count = 5;
+}
+
+message UpdateProductResponse {
+    uint64 id = 1;
+}
+
+message DeleteProductRequest {
     uint64 id = 1;
 }
