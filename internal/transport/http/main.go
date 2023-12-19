@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"sync"
 
-	shop "github.com/Gafforov-Bahrom/uzum_admin/internal/transport/http/admin"
+	"github.com/Gafforov-Bahrom/uzum_admin/internal/transport/http/admin"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -15,14 +15,14 @@ type Server struct {
 	engine *gin.Engine
 }
 
-func NewServer(port string, engine *gin.Engine, shopRouter *shop.Router) *Server {
+func NewServer(port string, engine *gin.Engine, adminRouter *admin.Router) *Server {
 	server := &Server{
 		engine: engine,
 		server: &http.Server{
 			Addr: port,
 		},
 	}
-	server.setShopRoutes(shopRouter)
+	server.setShopRoutes(adminRouter)
 	return server
 }
 
@@ -37,14 +37,11 @@ func (s *Server) Start(ctx context.Context, wg *sync.WaitGroup) error {
 	return s.server.ListenAndServe()
 }
 
-func (s *Server) setShopRoutes(shopRouter *shop.Router) {
-	// shop := s.engine.Group("/shop")
-	// shop.GET("/v1/product/:product_id", shopRouter.GetProduct)
-	// shop.GET("/v1/products", shopRouter.GetProducts)
-	// shop.POST("/v1/basket", shopRouter.AddProduct)
-	// shop.PUT("/v1/basket", shopRouter.UpdateProduct)
-	// shop.DELETE("v1/basket/:product_id", shopRouter.DeleteProduct)
-	// shop.GET("v1/basket", shopRouter.GetBasket)
-	// shop.POST("v1/order", shopRouter.CreateOrder)
-	// shop.DELETE("v1/order/:order_id", shopRouter.CancelOrder)
+func (s *Server) setShopRoutes(adminRouter *admin.Router) {
+	admin := s.engine.Group("/admin")
+	admin.POST("/v1/product", adminRouter.AddProduct)
+	admin.GET("/v1/product/:product_id", adminRouter.GetProduct)
+	admin.GET("/v1/products", adminRouter.GetProducts)
+	admin.DELETE("v1/product/:product_id", adminRouter.DeleteProduct)
+	admin.PUT("/v1/product", adminRouter.UpdateProduct)
 }

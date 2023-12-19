@@ -27,3 +27,16 @@ func (s *Router) getUserId(ctx context.Context, token string) (uint64, error) {
 	}
 	return out.UserId, nil
 }
+
+func (s *Router) getUserRole(ctx context.Context, token string) (*GetUserRoleOut, error) {
+	out, err := s.loginClient.GetUserRole(ctx, &login_v1.GetUserRoleRequest{
+		AccessToken: token,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &GetUserRoleOut{
+		Id:   out.UserId,
+		Role: out.Role,
+	}, nil
+}

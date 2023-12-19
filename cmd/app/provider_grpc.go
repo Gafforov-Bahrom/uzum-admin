@@ -8,5 +8,6 @@ import (
 func (sp *serviceProvider) GetProductServer() desc.AdminServiceServer {
 	return product.NewService(
 		sp.GetProductService(),
+		sp.GetLoginClient(),
 	)
 }

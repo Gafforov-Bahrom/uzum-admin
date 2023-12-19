@@ -14,15 +14,25 @@ type GetProductsResponse struct {
 }
 
 type AddProductRequest struct {
-	ProductId uint64 `json:"product_id"`
-	Count     uint64 `json:"count"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Count       uint64 `json:"count"`
+	Price       uint64 `json:"price"`
 }
 
 type UpdateProductRequest struct {
-	ProductId uint64 `json:"product_id"`
-	Count     uint64 `json:"count"`
+	Id          uint64 `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Count       uint64 `json:"count"`
+	Price       uint64 `json:"price"`
 }
 
 type CancelOrderRequest struct {
 	OrderId uint64 `json:"user_id"`
+}
+
+type GetUserRoleOut struct {
+	Id   uint64
+	Role string
 }

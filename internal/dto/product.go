@@ -20,3 +20,8 @@ type ListProductOut struct {
 	Count uint64
 	Items []*Product
 }
+
+type GetUserRoleOut struct {
+	UserId uint64
+	Role   string
+}
